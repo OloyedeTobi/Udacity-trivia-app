@@ -1,4 +1,5 @@
 import os
+from tabnanny import check
 import unittest
 import json
 from flask_sqlalchemy import SQLAlchemy
@@ -64,18 +65,18 @@ class TriviaTestCase(unittest.TestCase):
         data = json.loads(test.data)
         question_id = data[0]['question_id']
 
-        check = self.client().delete(f'/questions/{question_id}')
-        data = json.loads(check.data)
+        test = self.client().delete(f'/questions/{question_id}')
+        data = json.loads(test.data)
         self.assertTrue(data[0]['success'])
-        self.assertEqual(check.status_code, 200)
+        self.assertEqual(test.status_code, 200)
         
 
 
     def test_error_404_delete_question(self):
-        check = self.client().delete(f'/questions/{1234}')
-        data = json.loads(check.data)
+        test = self.client().delete(f'/questions/{4567}')
+        data = json.loads(test.data)
 
-        self.assertEqual(check.status_code, 404)
+        self.assertEqual(test.status_code, 404)
         self.assertEqual(data['error'], 404)
         self.assertEqual(data['success'], False)
         self.assertEqual(data['message'], 'Requested resource can not be found')
