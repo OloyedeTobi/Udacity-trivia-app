@@ -73,7 +73,7 @@ class TriviaTestCase(unittest.TestCase):
 
 
     def test_error_404_delete_question(self):
-        test = self.client().delete(f'/questions/{4567}')
+        test = self.client().delete(f'/questions/{1234}')
         data = json.loads(test.data)
 
         self.assertEqual(test.status_code, 404)
@@ -91,7 +91,7 @@ class TriviaTestCase(unittest.TestCase):
         self.assertTrue(data[0]['total_questions'] > 0)
 
     def test_error_400_get_questions_by_category(self):
-        test = self.client().get('/categories/134/questions')
+        test = self.client().get('/categories/150/questions')
         data = json.loads(test.data)
 
         self.assertEqual(test.status_code, 404)
