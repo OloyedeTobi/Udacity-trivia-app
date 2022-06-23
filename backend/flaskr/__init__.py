@@ -206,9 +206,9 @@ def create_app(test_config=None):
         body = request.get_json()
         if not body:
             abort(404)
-        previous_questions = body.get('previous_questions', None)
+        prev_questions = body.get('previous_questions', None)
         quiz_category = body.get('quiz_category', None)
-        if not previous_questions:
+        if not prev_questions:
             if quiz_category:
                 question_list = Question.query.filter(Question.category == (quiz_category['id'])).all()
             else:
@@ -216,19 +216,19 @@ def create_app(test_config=None):
         else:
             if quiz_category:
                 question_list = Question.query.filter(Question.category == str(quiz_category['id'])). \
-                    filter(Question.id.notin_(previous_questions)).all()
+                    filter(Question.id.notin_(prev_questions)).all()
             else:
-                question_list = Question.query.filter(Question.id.notin_(previous_questions)).all()
+                question_list = Question.query.filter(Question.id.notin_(prev_questions)).all()
         formatted_questions = [question.format() for question in question_list]
         total = len(formatted_questions)
         if total == 1:
-            random_question = formatted_questions[0]
+            randomQues = formatted_questions[0]
         else:
-            random_question = formatted_questions[random.randint(0, len(formatted_questions))]
+            randomQues = formatted_questions[random.randint(0, len(formatted_questions))]
 
         return jsonify({
             'success': True,
-            'question': random_question
+            'question': randomQues
         })
 
     """
