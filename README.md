@@ -28,7 +28,7 @@ The available endpoints are:
 Fetches a list of paginated questions (each page has 10 questions) with their ids, a list of all categories, the total number of questions, and a success indicator for the request.
 
 
-REQUEST ARGUMENT: `page`(optional)
+REQUEST ARGUMENT: `page`(int, optional)
 
 REQUEST HEADER: None
 
@@ -83,5 +83,32 @@ EXAMPLE RESPONSE:
     {...},
   ], 
   "total_questions": 22
+}
+```
+
+# 2. DELETE/ questions/<question_id>
+Deletes a particular question based on the given id.
+
+REQUEST ARGUMENT: `question_id`(int, required)
+
+REQUEST HEADER: None
+
+EXAMPLE REQUEST (using `curl` command in terminal):
+
+```
+$ curl -X DELETE http://127.0.0.1:5000/questions/1
+```
+
+RETURNS:
+
+Return a dictionary with:
+- success(Bolean)
+- question_id(int)
+
+EXAMPLE RESPONSE:
+```
+{
+"success": True,
+"question_id": 1
 }
 ```
