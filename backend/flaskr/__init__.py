@@ -24,15 +24,10 @@ def create_app(test_config=None):
     CORS(app)
 
     
-    """
-    @TODO: Use the after_request decorator to set Access-Control-Allow
-    """
     @app.after_request
     def after_request(response):
-        response.headers.add('Access-Control-Allow-Headers',
-                             'Content-Type,Authorization,true')
-        response.headers.add('Access-Control-Allow-Methods',
-                             'GET,PUT,POST,DELETE,OPTIONS')
+        response.headers.add('Access-Control-Allow-Headers','Content-Type,Authorization,true')
+        response.headers.add('Access-Control-Allow-Methods','GET,PUT,POST,DELETE,OPTIONS')
         return response
 
 
@@ -150,15 +145,19 @@ def create_app(test_config=None):
         quiz_category = body.get('quiz_category', None)
         if not prev_questions:
             if quiz_category:
-                question_list = Question.query.filter(Question.category == (quiz_category['id'])).all()
+                question_list = Question.query.filter(
+                                Question.category == (quiz_category['id'])).all()
             else:
                 question_list = Question.query.all()
         else:
             if quiz_category:
-                question_list = Question.query.filter(Question.category == str(quiz_category['id'])). \
+                question_list = Question.query.filter(
+                                Question.category == str(quiz_category['id'])). \
                     filter(Question.id.notin_(prev_questions)).all()
             else:
-                question_list = Question.query.filter(Question.id.notin_(prev_questions)).all()
+                question_list = Question.query.filter(
+                                Question.id.notin_(prev_questions)).all()
+                                
         formatted_questions = [question.format() for question in question_list]
         total = len(formatted_questions)
         if total == 1:
